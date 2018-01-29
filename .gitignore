@@ -1,0 +1,7 @@
+Procfile
+/certs/*
+/static/*
+/venv/*
+/.idea/*
+migrations
+__pycache__
