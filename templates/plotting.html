@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Plot</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/normalize.css" %}">
+    <link href="https://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="{% static "css/plotting.css" %}">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+</head>
+<body>
+
+<aside>
+    <nav>
+        <a href=""><i class="fa fa-btc"></i></a>
+        <a href=""><i class="fa fa-map"></i></a>
+        <a href=""><i class="fa fa-line-chart"></i></a>
+        <a href=""><i class="fa fa-compass"></i></a>
+        <a href="/analyzer/logout"><i class="fa fa-power-off"></i></a>
+    </nav>
+</aside>
+<main>
+    {{ div|safe }}
+</main>
+{{ script|safe }}
+</body>
+</html>

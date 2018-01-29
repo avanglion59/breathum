@@ -1,0 +1,28 @@
+form {
+    height: 400px;
+    width: 600px;
+    background-color: #d5dfe9;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+label, h1 {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    color: #4b4b4b;
+}
+
+.block {
+    margin: 10px 0;
+}

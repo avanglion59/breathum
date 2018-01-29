@@ -1,0 +1,320 @@
+* {
+    font-family: 'Open Sans', sans-serif;
+    box-sizing: border-box;
+    --color1: #f0f1f3;
+    --color2: #575c63;
+    --color3: #1f2122;
+    --color4: #afc0d7;
+    --color5: #d6dde8;
+}
+
+.intro {
+    /*background: linear-gradient(to bottom, #396e73 0%, #002444 100%);*/
+    background: var(--color1);
+}
+
+#typed,
+.typed-cursor {
+    color: var(--color2);
+    font-size: 90px;
+    font-family: 'Bad Script', cursive;
+}
+
+.typed-cursor {
+    animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.container {
+    max-width: 1024px;
+    margin: 0 auto;
+}
+
+header {
+    background-color: var(--color3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--color1);
+    line-height: 50px;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+nav a:not(:last-child) {
+    margin-right: 40px;
+}
+
+.intro {
+    padding: 100px 0;
+}
+
+.elements {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    color: var(--color3);
+}
+
+.element {
+    width: 300px;
+    height: 300px;
+    perspective: 1000px;
+}
+
+.element h2 {
+    font-size: 35px;
+    text-align: center;
+    font-weight: 400;
+}
+
+.element p {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.element .back i {
+    font-size: 80px;
+}
+
+.element .front i {
+    font-size: 55px;
+}
+
+.icon {
+    text-align: center;
+}
+
+.back,
+.front {
+    backface-visibility: hidden;
+    width: 300px;
+    height: 300px;
+    padding: 40px;
+    border-radius: 20px;
+    background-color: var(--color4);
+}
+
+.back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.back .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 220px;
+}
+
+.front {
+    transform: rotateY(180deg);
+    z-index: 1;
+}
+
+.element:hover .rotate {
+    transform: rotateY(180deg);
+}
+
+.element .rotate {
+    transition: 0.5s;
+    transform-style: preserve-3d;
+}
+
+.elements {
+    margin-top: 100px;
+}
+
+.elements:last-child {
+    margin-top: 60px;
+}
+
+.whyus {
+    padding: 20px 0;
+    background-color: var(--color4);
+}
+
+.whyus h2 {
+    font-size: 100px;
+    text-align: center;
+    font-family: 'Bad Script', cursive;
+    font-weight: 300;
+}
+
+.whyus .outer-fade {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 100px;
+}
+
+.whyus .inner-fade {
+    background-color: var(--color5);
+    padding: 30px;
+    margin-bottom: 40px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 35px;
+    width: 100%;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.whyus .inner-fade:nth-child(2n) {
+    flex-direction: row-reverse;
+}
+
+.whyus .inner-fade i {
+    font-size: 170px;
+}
+
+.whyus .inner-fade p {
+    text-align: right;
+}
+
+.impressed {
+    text-align: center;
+    padding: 20px 0;
+    background-color: var(--color3);
+    background-size: cover;
+    color: var(--color5);
+}
+
+.impressed h2 {
+    font-size: 70px;
+    margin-bottom: 0;
+    margin-top: 60px;
+    font-family: 'Bad Script', cursive;
+    font-weight: 300;
+}
+
+.impressed h2 span {
+    margin-left: 5px;
+    font-family: 'Bad Script', cursive;
+}
+
+.impressed a {
+    text-decoration: none;
+    display: inline-block;
+    padding: 20px 30px;
+    font-weight: 600;
+    color: var(--color5);
+    font-family: 'Open Sans', sans-serif;
+    background-color: transparent;
+    border: 2px solid var(--color5);
+    border-radius: 10px;
+    outline: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: .5s;
+}
+
+.impressed a:hover {
+    background-color: var(--color5);
+    color: var(--color3);
+}
+
+.impressed a:first-child {
+    margin-right: 10px;
+}
+
+.impressed a:last-child {
+    margin-left: 10px;
+}
+
+.impressed .buttons {
+    margin-top: 40px;
+    margin-bottom: 60px;
+}
+
+.work {
+    background-color: var(--color5);
+    padding: 1px 0;
+}
+
+.work h2 {
+    font-size: 70px;
+    margin-bottom: 0;
+    margin-top: 60px;
+    font-family: 'Bad Script', cursive;
+    text-align: center;
+    font-weight: 300;
+}
+
+.work .item {
+    height: 300px;
+    width: 300px;
+    background-color: var(--color3);
+}
+
+.work .item {
+    margin: 0 auto;
+    border-radius: 20px;
+    color: var(--color5);
+}
+
+.work .item-content {
+    padding: 20px;
+}
+
+.owl-carousel {
+    margin: 60px 0;
+}
+
+.work h3 {
+    text-align: left;
+    font-size: 25px;
+    margin: 0 0 10px;
+    line-height: 1;
+}
+
+.work p.text {
+    text-align: center;
+    margin-top: 0;
+    line-height: 1.25;
+}
+
+.work img {
+    position: absolute;
+    height: 100px;
+    width: 300px !important;
+    border-radius: 0 0 20px 20px;
+    bottom: 0;
+}
+
+.work hr {
+    width: 50px;
+    margin: 0;
+}
+
+.work a {
+    text-decoration: none;
+    color: var(--color4);
+}

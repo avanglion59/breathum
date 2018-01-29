@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width">
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/normalize.css" %}">
+    <link rel="stylesheet" href="{% static "css/login.css" %}">
+</head>
+<body>
+<form action="#" method="post">
+    {% csrf_token %}
+    <div class="block">
+        <h1>Login to Panel</h1>
+    </div>
+    <div class="block">
+        <label for="id_username">Username:</label>
+        <input name="username" required="" id="id_username">
+    </div>
+    <div class="block">
+        <label for="id_password">Password:</label>
+        <input name="password" required="" id="id_password" type="password">
+    </div>
+    <div class="block">
+        <input value="Submit" type="submit">
+    </div>
+</form>
+</body>
+</html>
