@@ -35,13 +35,10 @@ def login(request):
                 auth_login(request, user)
                 return HttpResponseRedirect('map')
             else:
-                return HttpResponseRedirect('login')
-    else:
-        form = LoginForm()
-
-    return render(request, 'login.html', {'form': form})
+                return HttpResponseRedirect('/')
+    return render(request, 'index.html')
 
 
 def logout(request):
     auth_logout(request)
-    return HttpResponseRedirect('login')
+    return HttpResponseRedirect('/')

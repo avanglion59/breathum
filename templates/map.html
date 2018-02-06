@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/ammap.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "css/map.css" %}">
+</head>
+<body>
+<div id="mapdiv"></div>
+<a class="btn-floating btn-large waves-effect waves-light red" id="sidebar-btn" href="#" data-activates="slide-out">
+    <i class="material-icons">menu</i>
+</a>
+
+<ul id="slide-out" class="side-nav">
+    <li>
+        <div class="user-view">
+            <a href="#!user"><img class="circle" src="{% static "img/mountains.png" %}"></a>
+            <a href="#!name"><span class="black-text name">John Doe</span></a>
+            <a href="#!email"><span class="black-text email">jdandturk@gmail.com</span></a>
+        </div>
+    </li>
+    <li><a href="#!"><i class="material-icons">cloud</i>Go to main</a></li>
+    <li><a href="#!"><i class="material-icons">cloud</i>Go to map</a></li>
+    <li><a href="#!"><i class="material-icons">cloud</i>Go to dashboard</a></li>
+    <li><a href="/logout"><i class="material-icons">cloud</i>Exit</a></li>
+</ul>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="https://www.amcharts.com/lib/3/ammap.js"></script>
+<script src="https://www.amcharts.com/lib/3/maps/js/worldHigh.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<script>
+    $("#sidebar-btn").sideNav();
+
+    var images = {{ data|safe }};
+
+    var map = AmCharts.makeChart("mapdiv", {
+        "projection": "eckert6",
+        "type": "map",
+        "mouseWheelZoomEnabled": true,
+        "dataProvider": {
+            "zoomLatitude": 0,
+            "zoomLongitude": 0,
+            "map": "worldHigh",
+            "images": images
+        }
+    });
+
+    $.ajaxSetup({
+        url: 'markers',
+        success: function (result) {
+            images = result;
+            map.dataProvider.images = images;
+            map.dataProvider.zoomLevel = map.zoomLevel();
+            map.dataProvider.zoomLatitude = map.zoomLatitude();
+            map.dataProvider.zoomLongitude = map.zoomLongitude();
+            // update map
+            map.validateData();
+        }
+    });
+
+    setInterval(function () {
+        $.ajax();
+    }, 15000);
+
+</script>
+</body>
+</html>

@@ -124,7 +124,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'assets')]
 
-LOGIN_URL = '/analyzer/login'
+LOGIN_URL = '/'
 
 try:
     from .local_settings import *

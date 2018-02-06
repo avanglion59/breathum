@@ -1,11 +1,19 @@
 * {
-    font-family: 'Open Sans', sans-serif;
+    /*font-family: 'Open Sans', sans-serif;*/
     box-sizing: border-box;
     --color1: #f0f1f3;
     --color2: #575c63;
     --color3: #1f2122;
     --color4: #afc0d7;
     --color5: #d6dde8;
+}
+
+.center {
+    text-align: left;
+}
+
+#entermodal h4 {
+    text-align: right;
 }
 
 .intro {
@@ -54,7 +62,7 @@ header {
     padding: 20px 0;
 }
 
-nav a {
+.navigator a {
     text-decoration: none;
     color: var(--color1);
     line-height: 50px;
@@ -63,7 +71,7 @@ nav a {
     font-weight: 300;
 }
 
-nav a:not(:last-child) {
+.navigator a:not(:last-child) {
     margin-right: 40px;
 }
 

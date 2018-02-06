@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width">
     {% load static %}
     <link rel="stylesheet" href="{% static "css/normalize.css" %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
     <link rel="stylesheet" href="{% static "css/login.css" %}">
 </head>
 <body>
@@ -15,15 +17,15 @@
         <h1>Login to Panel</h1>
     </div>
     <div class="block">
-        <label for="id_username">Username:</label>
-        <input name="username" required="" id="id_username">
+        <label for="id_username" class="validate">Username:</label>
+        <input name="username" required="" id="id_username" class="input-field">
     </div>
     <div class="block">
         <label for="id_password">Password:</label>
         <input name="password" required="" id="id_password" type="password">
     </div>
     <div class="block">
-        <input value="Submit" type="submit">
+        <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
     </div>
 </form>
 </body>

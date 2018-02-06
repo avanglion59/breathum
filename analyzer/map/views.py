@@ -1,3 +1,5 @@
+import json
+
 import plotly.graph_objs as go
 from bokeh.embed import components
 from bokeh.layouts import gridplot
@@ -6,6 +8,7 @@ from bokeh.models import (
 )
 from bokeh.resources import CDN
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import render
 from plotly.offline import plot
 
@@ -81,13 +84,14 @@ def make_hover_info(sensor, url_base):
     response += '<a href = "' + url_base + str(sensor['sensor_id']) + '">See Full Data</a>'
     return response
 
+
 @login_required
 def plotly_map_view(request):
     sensor_data = get_device_data(request.user)
 
     host = request.get_host()
 
-    url_base = 'https://' if request.is_secure() else 'http://' + host + '/analyzer/sensor/plotly/'
+    url_base = 'https://' if request.is_secure() else 'http://' + host + '/sensor/plotly/'
     text_data = [make_hover_info(i, url_base) for i in sensor_data]
 
     data = go.Data([
@@ -127,3 +131,43 @@ def plotly_map_view(request):
     fig = dict(data = data, layout = layout)
     div = plot(fig, output_type = 'div')
     return render(request, 'plotting.html', {'script': '', 'div': div})
+
+
+def get_marker_data(request, user):
+    host = request.get_host()
+
+    url_base = 'https://' if request.is_secure() else 'http://' + host + '/sensor/plotly/'
+
+    sensors = Sensor.objects.filter(user__username = user)
+
+    data = list()
+
+    for sensor in sensors:
+        val = DataItem.objects.filter(sensor = sensor).latest('timestamp')
+        sensor_item = dict(
+            # type_title = sensor.type.title,
+            # unit = sensor.unit,
+            title = sensor.title,
+            # sensor_id = sensor.id,
+            # value = val.data,
+            latitude = float(val.latitude),
+            longitude = float(val.longitude),
+            type = "circle",
+            description = str(sensor.type.title + "<br>" + sensor.unit + '<br>' + str(
+                val.data) + '<br>' + '<a href = "' + url_base + str(sensor.id) + '">See Full Data</a>')
+        )
+        data.append(sensor_item)
+
+    return data
+
+
+def marker_api(request):
+    md = get_marker_data(request, request.user)
+    return JsonResponse(md, safe = False)
+
+
+@login_required
+def ammap_map_view(request):
+    md = get_marker_data(request, request.user)
+    data = json.dumps(md)
+    return render(request, 'map.html', {'data': data})

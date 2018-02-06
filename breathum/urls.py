@@ -16,9 +16,10 @@ Including another URLconf
 from django.urls import path, include
 from django.contrib import admin
 from django.views.generic import TemplateView
+from analyzer.views import login
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('analyzer/', include('analyzer.urls')),
-    path('', TemplateView.as_view(template_name='index.html'))
+    path('', include('analyzer.urls')),
+    path('template', TemplateView.as_view(template_name='map.html')),
 ]
