@@ -170,4 +170,7 @@ def marker_api(request):
 def ammap_map_view(request):
     md = get_marker_data(request, request.user)
     data = json.dumps(md)
-    return render(request, 'map.html', {'data': data})
+    return render(request, 'map.html',
+                  {'data': data,
+                   'username': request.user.first_name + ' ' + request.user.last_name,
+                   'email': request.user.email})
