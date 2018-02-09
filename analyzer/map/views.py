@@ -136,7 +136,7 @@ def plotly_map_view(request):
 def get_marker_data(request, user):
     host = request.get_host()
 
-    url_base = 'https://' if request.is_secure() else 'http://' + host + '/sensor/plotly/'
+    url_base = 'https://' if request.is_secure() else 'http://' + host + '/sensor/chart/'
 
     sensors = Sensor.objects.filter(user__username = user)
 
@@ -154,7 +154,7 @@ def get_marker_data(request, user):
             longitude = float(val.longitude),
             type = "circle",
             description = str(sensor.type.title + "<br>" + sensor.unit + '<br>' + str(
-                val.data) + '<br>' + '<a href = "' + url_base + str(sensor.id) + '">See Full Data</a>')
+                val.data) + '<br>' + '<a target="blank" href="' + url_base + str(sensor.id) + '">See Full Data</a>')
         )
         data.append(sensor_item)
 
@@ -174,3 +174,6 @@ def ammap_map_view(request):
                   {'data': data,
                    'username': request.user.first_name + ' ' + request.user.last_name,
                    'email': request.user.email})
+
+def gmap(request):
+    pass

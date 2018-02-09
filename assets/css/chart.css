@@ -1,0 +1,15 @@
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.chart-container {
+    height: 100%;
+    width: 100%;
+}
+
+#sidebar-btn {
+    position: fixed !important;
+    top: 90vh;
+    left: 95vw;
+}

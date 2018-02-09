@@ -1,3 +1,5 @@
+import json
+
 import plotly.graph_objs as go
 from bokeh.embed import components
 from bokeh.layouts import gridplot
@@ -5,6 +7,7 @@ from bokeh.models import HoverTool
 from bokeh.plotting import figure
 from bokeh.resources import CDN
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from plotly.offline import plot
 
@@ -97,3 +100,32 @@ def plotly_sensor_view(request, sensor_id):
         output_type = 'div',
     )
     return render(request, 'plotting.html', {'script': '', 'div': div})
+
+
+@login_required
+def chartjs_sensor_view(request, sensor_id):
+    current_sensor = Sensor.objects.get(id = sensor_id)
+    attached_devices = Sensor.objects.filter(user__username = request.user)
+    if current_sensor not in attached_devices:
+        return redirect(login_view)
+
+    values = DataItem.objects.filter(sensor = current_sensor).order_by('timestamp')
+
+    dates = json.dumps(list(map(lambda x: x['timestamp'].isoformat(), values.values('timestamp'))))
+    data = json.dumps(list(map(lambda x: x['data'], values.values('data'))))
+    label = current_sensor.title + ', ' + current_sensor.unit
+
+    return render(request, 'chart.html', {'dates': dates, 'label': label, 'data': data, 'sensor': sensor_id})
+
+
+def marker_api(request):
+    current_sensor = Sensor.objects.get(id = request.GET.get('sensor_id'))
+    attached_devices = Sensor.objects.filter(user__username = request.user)
+    if current_sensor not in attached_devices:
+        return redirect(login_view)
+
+    values = DataItem.objects.filter(sensor = current_sensor).order_by('timestamp')
+
+    dates = list(map(lambda x: x['timestamp'].isoformat(), values.values('timestamp')))
+    data = list(map(lambda x: x['data'], values.values('data')))
+    return JsonResponse({'labels': dates, 'data': data}, safe = False)
