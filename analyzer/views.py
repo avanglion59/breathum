@@ -11,7 +11,7 @@ from .models import DataItem
 
 
 @csrf_exempt
-def insert_data(request):
+def insert(request):
     if request.method == 'POST':
         lat = request.POST.get('latitude')
         lng = request.POST.get('longitude')
@@ -25,7 +25,7 @@ def insert_data(request):
     return response
 
 
-def login(request):
+def main(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -36,7 +36,7 @@ def login(request):
                 return HttpResponseRedirect('map')
             else:
                 return HttpResponseRedirect('/')
-    return render(request, 'index.html')
+    return render(request, 'main.html')
 
 
 def logout(request):

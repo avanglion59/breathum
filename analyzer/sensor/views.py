@@ -12,7 +12,7 @@ from django.shortcuts import redirect, render
 from plotly.offline import plot
 
 from analyzer.models import Sensor, DataItem
-from analyzer.views import login as login_view
+from analyzer.views import main
 
 
 @login_required
@@ -20,7 +20,7 @@ def sensor_view(request, sensor_id):
     current_sensor = Sensor.objects.get(id = sensor_id)
     attached_devices = Sensor.objects.filter(user__username = request.user)
     if current_sensor not in attached_devices:
-        return redirect(login_view)
+        return redirect(main)
 
     values = DataItem.objects.filter(sensor = current_sensor).order_by('timestamp')
 
@@ -56,7 +56,7 @@ def plotly_sensor_view(request, sensor_id):
     current_sensor = Sensor.objects.get(id = sensor_id)
     attached_devices = Sensor.objects.filter(user__username = request.user)
     if current_sensor not in attached_devices:
-        return redirect(login_view)
+        return redirect(main)
 
     values = DataItem.objects.filter(sensor = current_sensor).order_by('timestamp')
 
@@ -107,7 +107,7 @@ def chartjs_sensor_view(request, sensor_id):
     current_sensor = Sensor.objects.get(id = sensor_id)
     attached_devices = Sensor.objects.filter(user__username = request.user)
     if current_sensor not in attached_devices:
-        return redirect(login_view)
+        return redirect(main)
 
     values = DataItem.objects.filter(sensor = current_sensor).order_by('timestamp')
 
@@ -122,7 +122,7 @@ def marker_api(request):
     current_sensor = Sensor.objects.get(id = request.GET.get('sensor_id'))
     attached_devices = Sensor.objects.filter(user__username = request.user)
     if current_sensor not in attached_devices:
-        return redirect(login_view)
+        return redirect(main)
 
     values = DataItem.objects.filter(sensor = current_sensor).order_by('timestamp')
 
