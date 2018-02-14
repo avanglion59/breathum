@@ -3,7 +3,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('point', views.map, name = 'pointmap'),
-    path('heat', views.map, name = 'heatmap'),
+    path('point', views.pointmap, name = 'pointmap'),
+    path('heat', views.heatmap, name = 'heatmap'),
     path('api', views.api, name = 'api'),
 ]

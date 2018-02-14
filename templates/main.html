@@ -29,7 +29,11 @@
             <a href="#whyus">Почему Мы?</a>
             <a href="#work">Таймлайн</a>
             <a href="#impressed">Свяжитесь с нами</a>
-            <a href="#entermodal" class="modal-trigger">Войти</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="modal-trigger">Выйти из аккаунта {{ user.get_username }}</a>
+            {% else %}
+                <a href="#entermodal" class="modal-trigger">Войти</a>
+            {% endif %}
         </div>
     </div>
 </header>

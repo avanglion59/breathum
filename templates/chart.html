@@ -1,95 +1,81 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Chart</title>
-    {% load static %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% extends 'base_app.html' %}
+
+{% load static %}
+
+{% block css %}
     <link rel="stylesheet" href="{% static "css/chart.css" %}">
-</head>
-<body>
-<div class="chart-container">
-    <canvas id="chartdiv"></canvas>
-</div>
+{% endblock %}
 
-<a class="btn-floating btn-large waves-effect waves-light red" id="sidebar-btn" href="#" data-activates="slide-out">
-    <i class="material-icons">menu</i>
-</a>
+{% block title %}
+    Your pollution chart
+{% endblock %}
 
-<ul id="slide-out" class="side-nav">
-    <li>
-        <div class="user-view">
-            <img class="circle" src="{% static "img/mountains.png" %}">
-            <span class="black-text name">{{ username }}</span>
-            <span class="black-text email">{{ email }}</span>
-        </div>
-    </li>
-    <li><a href="/"><i class="material-icons">cloud</i>Main</a></li>
-    <li><a href="/map"><i class="material-icons">map</i>Map</a></li>
-    <li><a href="/dashboard"><i class="material-icons">dashboard</i>Dashboard</a></li>
-    <li><a href="/logout"><i class="material-icons">exit_to_app</i>Exit</a></li>
-</ul>
+{% block content %}
+    <div class="chart-container">
+        <canvas id="chart"></canvas>
+    </div>
+{% endblock %}
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
-<script src="https://momentjs.com/downloads/moment.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-<script>
-    $("#sidebar-btn").sideNav();
-    var sensor = '{{ sensor }}';
-    var ctx = document.getElementById('chartdiv').getContext('2d');
-    var chart = new Chart(ctx, {
-        type: 'line',
+{% block scripts %}
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script>
+        $("#sidebar-btn").sideNav();
+        var sensor = '{{ sensor }}';
+        var ctx = document.getElementById('chart').getContext('2d');
 
-        data: {
-            labels: {{ dates|safe }},
-            datasets: [{
-                label: '{{ label }}',
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 255, 255, 0)',
-                data: {{ data|safe }}
-            }]
-        },
+        config = {
+            type: 'line',
 
-        options: {
-            maintainAspectRatio: false,
-            scales: {
-                xAxes: [{
-                    type: 'time'
-                }],
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
+            data: {
+                labels: {{ dates|safe }},
+                datasets: [{
+                    label: '{{ label }}',
+                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: 'rgba(255, 255, 255, 0)',
+                    data: {{ data|safe }}
                 }]
             },
-            layout: {
-                padding: {
-                    left: 25,
-                    right: 100,
-                    top: 25,
-                    bottom: 25
+
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    xAxes: [{
+                        type: 'time'
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                layout: {
+                    padding: {
+                        left: 25,
+                        right: 100,
+                        top: 25,
+                        bottom: 25
+                    }
                 }
             }
-        }
-    });
+        };
 
-    $.ajaxSetup({
-        url: 'markers',
-        success: function (result) {
-            chart.labels = result.labels;
-            chart.data.datasets[0].data = result.data;
-            chart.update();
-        },
-        data: {sensor_id: sensor},
-        contentType: 'application/json; charset=utf-8'
-    });
+        var chart = new Chart(ctx, config);
 
-    setInterval(function () {
-        $.ajax();
-    }, 15000);
+        $.ajaxSetup({
+            url: 'api',
+            success: function (result) {
+                config.data.labels = result.labels;
+                config.data.datasets[0].data = result.data;
+                chart.update();
+            },
+            data: {id: sensor},
+            contentType: 'application/json; charset=utf-8'
+        });
 
-</script>
-</body>
-</html>
+        setInterval(function () {
+            $.ajax();
+        }, 15000);
+
+    </script>
+{% endblock %}
