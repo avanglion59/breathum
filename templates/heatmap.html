@@ -34,13 +34,13 @@
 
         var heatmap_data = {
             max: 1000,
-            min: 0,
+            min: -100,
             data: data
         };
 
         var heatmapLayer = new HeatmapOverlay(cfg);
 
-        var base = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        var base = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         });
 
@@ -49,7 +49,14 @@
             layers: [base, heatmapLayer]
         });
 
-        map.locate({setView: true, maxZoom: 16});
+        $.getJSON("https://ipinfo.io", function (ipinfo) {
+            latLong = ipinfo.loc.split(",");
+            map.setView([+latLong[0], +latLong[1]], 12);
+        });
+
+        //map.on('locationerror', onLocationError);
+
+        //map.locate({setView: true, maxZoom: 16});
 
         heatmapLayer.setData(heatmap_data);
 

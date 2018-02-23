@@ -41,11 +41,22 @@
                 maintainAspectRatio: false,
                 scales: {
                     xAxes: [{
-                        type: 'time'
+                        type: 'time',
+                        time : {
+                            tooltipFormat: 'll HH:mm'
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Datetime'
+                        }
                     }],
                     yAxes: [{
                         ticks: {
                             beginAtZero: true
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Value'
                         }
                     }]
                 },
