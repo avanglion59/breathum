@@ -1,0 +1,86 @@
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+#sidebar-btn {
+    position: fixed !important;
+    top: 90vh;
+    left: 95vw;
+}
+
+#slide-out, #sidebar-btn {
+    z-index: 1000;
+}
+
+#item-1 {
+    grid-area: area1;
+}
+
+#item-2 {
+    grid-area: area2;
+}
+
+#item-3 {
+    grid-area: area3;
+}
+
+#item-4 {
+    grid-area: area4;
+}
+
+#item-5 {
+    grid-area: area5;
+}
+
+#item-6 {
+    grid-area: area6;
+}
+
+#item-7 {
+    grid-area: area7;
+}
+
+#item-8 {
+    grid-area: area8;
+}
+
+#item-9 {
+    grid-area: area9;
+}
+
+#item-10 {
+    grid-area: area10;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-areas: 'area5 area1 area2 area3' 'area5 area4 area6 area7' 'area5 area8 area9 area10';
+    grid-gap: 20px;
+    padding: 20px;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.card {
+    height: 100%;
+    margin: 0;
+}
+
+#item-5 .btn {
+    width: 100%;
+}
+
+.grid-container .u-content {
+    display: flex;
+    height: 85%;
+}
+
+.u-container {
+    margin: auto;
+}
+
+.card-content {
+    height: 100%;
+}

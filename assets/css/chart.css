@@ -3,13 +3,36 @@ body, html {
     margin: 0;
 }
 
-.chart-container {
+.u-container {
     height: 100%;
     width: 100%;
+    display: grid;
+    grid-template-areas: 'card chart chart chart' 'desc chart chart chart';
+    padding: 20px;
+    box-sizing: border-box;
+    grid-gap: 20px;
+}
+
+.card {
+    grid-area: card;
+    height: 100%;
+    margin: 0;
+}
+
+.chart-container {
+    grid-area: chart;
 }
 
 #sidebar-btn {
     position: fixed !important;
     top: 90vh;
     left: 95vw;
+}
+
+.btn {
+    width: 100%;
+}
+
+.u-desc {
+    grid-area: desc;
 }
