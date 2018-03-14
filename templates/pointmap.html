@@ -73,12 +73,9 @@
 
         setInterval($.ajax, 15000);
 
-
-        $.getJSON("https://ipinfo.io", function (ipinfo) {
-            latLong = ipinfo.loc.split(",");
-            map.setView([+latLong[0], +latLong[1]], 12);
+        navigator.geolocation.getCurrentPosition(function (position) {
+            map.setView([position.coords.latitude, position.coords.longitude], 12);
         });
-
 
     </script>
 {% endblock %}
