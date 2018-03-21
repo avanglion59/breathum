@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '$123_nj8vtcodhz#++j4^htn+66pe5$!hovf0p9prbzc$qo(4s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # ALLOWED_HOSTS = ['127.0.0.1', '.breathum.herokuapp.com', '.breathum.ml', '46.160.68.56']
 ALLOWED_HOSTS = ['*']
@@ -77,11 +77,11 @@ WSGI_APPLICATION = 'breathum.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd1ceuj1oobo9s1',
-        'USER': 'isztsoesiolbir',
-        'PASSWORD': '8a73f093e8941bf7b25f8c1fc7c6d17c0c578819c21c357b43875e9d6431abe4',
-        'HOST': 'ec2-54-75-230-240.eu-west-1.compute.amazonaws.com',
-        'PORT': '',
+        'NAME': 'breathum',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
+        'PORT': '5433',
     }
 }
 
@@ -125,8 +125,3 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'assets')]
 
 LOGIN_URL = '/'
-
-try:
-    from .local_settings import *
-except ImportError:
-    pass
