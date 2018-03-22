@@ -46,8 +46,8 @@ class PointMapView(MapView):
     template = 'pointmap.html'
 
     def get(self, request):
-        md = self.get_marker_data(request)
-        data = json.dumps(md)
+        marker_data = self.get_marker_data(request)
+        data = json.dumps(marker_data)
         return render(request, self.template,
                       {'data': data,
                        'username': request.user.first_name + ' ' + request.user.last_name,
@@ -58,8 +58,8 @@ class HeatMapView(MapView):
     template = 'heatmap.html'
 
     def get(self, request):
-        md = self.get_marker_data(request)
-        data = json.dumps(md)
+        marker_data = self.get_marker_data(request)
+        data = json.dumps(marker_data)
         return render(request, self.template,
                       {'data': data,
                        'username': request.user.first_name + ' ' + request.user.last_name,
@@ -68,5 +68,5 @@ class HeatMapView(MapView):
 
 class APIMapView(MapView):
     def get(self, request):
-        md = self.get_marker_data(request)
-        return JsonResponse(md, safe=False)
+        marker_data = self.get_marker_data(request)
+        return JsonResponse(marker_data, safe=False)

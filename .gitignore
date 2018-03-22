@@ -5,3 +5,4 @@ Procfile
 /.idea/*
 migrations
 __pycache__
+/venv.bak/*
