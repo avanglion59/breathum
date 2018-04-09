@@ -49,9 +49,16 @@
             layers: [base, heatmapLayer]
         });
 
-        navigator.geolocation.getCurrentPosition(function (position) {
-            map.setView([position.coords.latitude, position.coords.longitude], 12);
-        });
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                map.setView([position.coords.latitude, position.coords.longitude], 12);
+                console.log(position);
+            },
+            function (error) {
+                console.log(error);
+                map.setView([47.09514, 37.54131], 12);
+            }
+        );
 
         heatmapLayer.setData(heatmap_data);
 

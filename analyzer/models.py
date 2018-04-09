@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
-# TODO: add color to this model
 class SensorType(models.Model):
     title = models.CharField(max_length=150)
 
