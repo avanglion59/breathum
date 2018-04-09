@@ -1,9 +1,11 @@
 import uuid
 import random
 from datetime import datetime, timedelta
+from hashlib import sha256
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.core.serializers import serialize
 
 
 class SensorType(models.Model):
@@ -33,6 +35,14 @@ class DataItem(models.Model):
     timestamp = models.DateTimeField()
     latitude = models.DecimalField(max_digits=8, decimal_places=5)
     longitude = models.DecimalField(max_digits=8, decimal_places=5)
+    previous_hash = models.TextField()
+
+    def save(self, *args, **kwargs):
+        try:
+            self.previous_hash = sha256(serialize('json', [DataItem.objects.last()]).encode('utf-8')).hexdigest()
+        except AttributeError:
+            self.previous_hash = 0
+        super(DataItem, self).save(*args, **kwargs)
 
     @staticmethod
     def _bootstrap(sensor_id, latitude=47.09514, longitude=37.54131, count=100):
