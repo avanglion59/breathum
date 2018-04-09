@@ -1,4 +1,6 @@
 import uuid
+import random
+from datetime import datetime, timedelta
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -31,6 +33,16 @@ class DataItem(models.Model):
     timestamp = models.DateTimeField()
     latitude = models.DecimalField(max_digits=8, decimal_places=5)
     longitude = models.DecimalField(max_digits=8, decimal_places=5)
+
+    @staticmethod
+    def _bootstrap(sensor_id, latitude=47.09514, longitude=37.54131, count=100):
+        timestamp = datetime.now()
+        for i in range(count):
+            data = round(random.gauss(750, 5))
+            timestamp += timedelta(minutes=1)
+            obj = DataItem.objects.create(data=data, timestamp=timestamp, latitude=latitude, longitude=longitude,
+                                          sensor_id=sensor_id)
+            obj.save()
 
 
 class Device(models.Model):
