@@ -8,7 +8,7 @@ from django.shortcuts import render, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from .forms import LoginForm
-from .models import DataItem
+from .models.data_item import DataItem
 
 
 @csrf_exempt
@@ -35,8 +35,8 @@ def insert(request):
 
         timestamp = datetime.now()
 
-        item = DataItem(latitude = lat, longitude = lng, data = data['val'], timestamp = timestamp,
-                        sensor_id = data['id'])
+        item = DataItem(latitude=lat, longitude=lng, data=data['val'], timestamp=timestamp,
+                        sensor_id=data['id'])
         item.save()
 
     elif request.method == 'GET':
@@ -49,8 +49,8 @@ def main(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            user = authenticate(request, username = form.cleaned_data['username'],
-                                password = form.cleaned_data['password'])
+            user = authenticate(request, username=form.cleaned_data['username'],
+                                password=form.cleaned_data['password'])
             if user is not None:
                 auth_login(request, user)
                 return HttpResponseRedirect('map/point')

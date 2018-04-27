@@ -6,7 +6,8 @@ from django.shortcuts import render
 from django.views import View
 from django.utils.decorators import method_decorator
 
-from analyzer.models import Sensor, DataItem
+from analyzer.models.sensor import Sensor
+from analyzer.models.data_item import DataItem
 from abc import ABC, abstractmethod
 
 

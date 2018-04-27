@@ -1,34 +1,13 @@
 import random
-import uuid
 from datetime import datetime, timedelta
 from hashlib import sha256
 
-from django.contrib.auth.models import User
 from django.core.serializers import serialize
 from django.db import models
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
-
-class SensorType(models.Model):
-    title = models.CharField(max_length=150)
-
-    def __str__(self):
-        return self.title
-
-
-class Sensor(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    title = models.CharField(max_length=150)
-    unit = models.CharField(max_length=30)
-    risk_bound = models.FloatField()
-    danger_bound = models.FloatField()
-    user = models.ManyToManyField(User)
-    trust_level = models.DecimalField(max_digits=1, decimal_places=0)
-    type = models.ForeignKey(SensorType, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.title + ' (' + str(self.id) + ')'
+from analyzer.models.sensor import Sensor
 
 
 class DataItem(models.Model):
@@ -73,8 +52,3 @@ class DataItem(models.Model):
 @receiver(pre_save, sender=DataItem)
 def blockchain_hasher(sender, instance, *args, **kwargs):
     instance.previous_hash = sender.blockchain_hash(sender.objects.order_by('timestamp').last())
-
-
-class Device(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    sensors = models.ManyToManyField(Sensor)

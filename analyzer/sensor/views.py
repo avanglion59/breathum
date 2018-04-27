@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 
-from analyzer.models import Sensor, DataItem
+from analyzer.models.sensor import Sensor
+from analyzer.models.data_item import DataItem
 from analyzer.views import main
 
 
