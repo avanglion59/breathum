@@ -8,8 +8,9 @@ class SensorTypeAdmin(admin.ModelAdmin):
 
 
 class DataItemAdmin(admin.ModelAdmin):
-    list_display = ('sensor', 'data', 'timestamp')
-    list_filter = ('sensor', 'timestamp')
+    list_display = ('sensor', 'data', 'timestamp',)
+    list_filter = ('sensor', 'timestamp',)
+    readonly_fields = ('previous_hash',)
 
 
 class SensorAdmin(admin.ModelAdmin):
