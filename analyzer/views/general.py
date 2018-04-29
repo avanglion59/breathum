@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from analyzer.forms import LoginForm
 from analyzer.models.data_item import DataItem
 
+# TODO: split this into several files
 
 @csrf_exempt
 def insert(request):

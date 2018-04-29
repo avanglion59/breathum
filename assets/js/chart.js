@@ -99,7 +99,7 @@ to = '';
 var chart = new Chart(ctx, config);
 
 $.ajaxSetup({
-    url: 'api',
+    url: '../api/sensor',
     success: function (result) {
         config.data.labels = result.labels;
         config.data.datasets[0].data = result.data;

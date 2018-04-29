@@ -41,7 +41,7 @@ for (var i = 0; i < data.length; i++) {
 // heatmapLayer.setData(heatmap_data)
 
 $.ajaxSetup({
-    url: 'api',
+    url: '../api/map',
     success: function (result) {
         data = result;
         markers.clearLayers();

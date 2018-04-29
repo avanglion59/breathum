@@ -23,16 +23,16 @@ class MapView(ABC, View):
         data = list()
 
         for sensor in sensors:
-            val = DataItem.objects.filter(sensor=sensor).latest('timestamp')
+            last_data_item = DataItem.objects.filter(sensor=sensor).latest('timestamp')
             sensor_item = dict(
-                lat=float(val.latitude),
-                lng=float(val.longitude),
-                val=val.data,
-                desc='<b>' + sensor.title + '</b>' + '<br>' +
-                     str(sensor.type.title) + '<br>' +
-                     sensor.unit + '<br>' +
-                     str(val.data) + '<br>' +
-                     '<a target="_blank" href="' + url_base + str(sensor.id) + '">See Full Data</a>'
+                lat=float(last_data_item.latitude),
+                lng=float(last_data_item.longitude),
+                val=last_data_item.data,
+                desc=f'<b>{sensor.title}</b><br>'
+                     f'{str(sensor.type.title)}<br>'
+                     f'{sensor.unit}<br>'
+                     f'{str(last_data_item.data)}<br>'
+                     f'<a target="_blank" href="{url_base}{str(sensor.id)}">See Full Data</a>'
             )
             data.append(sensor_item)
 

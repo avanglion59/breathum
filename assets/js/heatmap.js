@@ -45,7 +45,7 @@ map.setView([47.09514, 37.54131], 12);
 heatmapLayer.setData(heatmap_data);
 
 $.ajaxSetup({
-    url: 'api',
+    url: '../api/map',
     success: function (result) {
         data = result;
         heatmap_data.data = data;
