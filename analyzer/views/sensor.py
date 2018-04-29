@@ -7,7 +7,8 @@ from django.shortcuts import redirect, render
 
 from analyzer.models.sensor import Sensor
 from analyzer.models.data_item import DataItem
-from analyzer.views import main
+from analyzer.models.sensor_type import SensorType
+from analyzer.views.general import main
 
 
 @login_required
@@ -32,7 +33,8 @@ def sensor(request):
                    'risk': current_sensor.risk_bound,
                    'danger': current_sensor.danger_bound,
                    'trust': current_sensor.trust_level,
-                   'unit': current_sensor.unit
+                   'unit': current_sensor.unit,
+                   'category_list': SensorType.objects.all()
                    })
 
 

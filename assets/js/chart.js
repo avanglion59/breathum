@@ -1,3 +1,15 @@
+$(document).ready(function () {
+    $('select').material_select();
+});
+
+$("#category-select").change(function () {
+    category = this.value;
+    $('#sensor-select').empty();
+    $.get("categories", function (data) {
+        $(".result").html(data);
+    });
+});
+
 ctx = document.getElementById('chart').getContext('2d');
 config = {
     type: 'line',

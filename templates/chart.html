@@ -15,7 +15,7 @@
         <div class="u-card">
             <div class="card deep-purple darken-1">
                 <div class="card-content white-text">
-                    <span class="card-title">Select needed timedelta</span>
+                    <span class="card-title">Select timedelta</span>
                     <br>
                     <div class="input-field">
                         <input type="text" class="datepicker" id="from">
@@ -26,6 +26,29 @@
                         <label>Select To</label>
                     </div>
                     <br>
+                    <button class="btn waves-effect waves-light" type="submit" name="action" id="click">Get It
+                        <i class="material-icons right">send</i>
+                    </button>
+                    <br>
+                    <br>
+                    <br>
+                    <span class="card-title">Select devices</span>
+                    <div class="input-field">
+                        <select id="category-select">
+                            <option value="" disabled selected>Choose your option</option>
+                            {% for category in category_list %}
+                                <option value="{{ category.title }}">{{ category.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <select multiple id="sensor-select">
+                            <option value="" disabled selected>Choose your option</option>
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                            <option value="3">Option 3</option>
+                        </select>
+                    </div>
                     <button class="btn waves-effect waves-light" type="submit" name="action" id="click">Get It
                         <i class="material-icons right">send</i>
                     </button>

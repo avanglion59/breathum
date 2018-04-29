@@ -7,8 +7,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from .forms import LoginForm
-from .models.data_item import DataItem
+from analyzer.forms import LoginForm
+from analyzer.models.data_item import DataItem
 
 
 @csrf_exempt
