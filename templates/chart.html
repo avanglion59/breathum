@@ -1,4 +1,4 @@
-{% extends 'base_app.html' %}
+{% extends 'base.html' %}
 
 {% load static %}
 
@@ -35,18 +35,6 @@
         <div class="chart-container">
             <canvas id="chart"></canvas>
         </div>
-        <div class="u-desc">
-            <div class="card deep-purple darken-1">
-                <div class="card-content white-text">
-                    <span class="card-title">Description</span>
-                    <p>Type: {{ type }}</p>
-                    <p>Risk bound: {{ risk }}</p>
-                    <p>Danger Bound: {{ danger }}</p>
-                    <p>Trust Level: {{ trust }}</p>
-                    <p>Unit: {{ unit }}</p>
-                </div>
-            </div>
-        </div>
     </div>
 {% endblock %}
 
@@ -54,104 +42,12 @@
     <script src="https://momentjs.com/downloads/moment.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script>
-        $("#sidebar-btn").sideNav();
-
-        $('.datepicker').pickadate({
-            selectMonths: true, // Creates a dropdown to control month
-            selectYears: 15, // Creates a dropdown of 15 years to control year,
-            today: 'Today',
-            clear: 'Clear',
-            close: 'Ok',
-            closeOnSelect: false // Close upon selecting a date,
-        });
-
-        from = '';
-        to = '';
-
-        var sensor = '{{ sensor }}';
-        var ctx = document.getElementById('chart').getContext('2d');
-
-        config = {
-            type: 'line',
-
-            data: {
-                labels: {{ dates|safe }},
-                datasets: [{
-                    label: '{{ label }}',
-                    borderColor: 'rgb(255, 99, 132)',
-                    backgroundColor: 'rgba(255, 255, 255, 0)',
-                    data: {{ data|safe }}
-                }]
-            },
-
-            options: {
-                maintainAspectRatio: false,
-                scales: {
-                    xAxes: [{
-                        type: 'time',
-                        time: {
-                            tooltipFormat: 'll HH:mm'
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Datetime'
-                        }
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Value'
-                        }
-                    }]
-                },
-                layout: {
-                    padding: {
-                        left: 25,
-                        right: 100,
-                        top: 25,
-                        bottom: 25
-                    }
-                }
-            }
-        };
-
-        var chart = new Chart(ctx, config);
-
-        $.ajaxSetup({
-            url: 'api',
-            success: function (result) {
-                config.data.labels = result.labels;
-                config.data.datasets[0].data = result.data;
-                chart.update();
-            },
-            contentType: 'application/json; charset=utf-8'
-        });
-
-        setInterval(function () {
-            $.ajax({
-                data: {
-                    id: sensor,
-                    from: from,
-                    to: to
-                }
-            });
-        }, 15000);
-
-
-        $("#click").click(function () {
-            from = $('#from').pickadate('picker').get('select', 'dd/mm/yyyy');
-            to = $('#to').pickadate('picker').get('select', 'dd/mm/yyyy');
-            $.ajax({
-                data: {
-                    id: sensor,
-                    from: from,
-                    to: to
-                }
-            });
-        });
-
+        risk = {{ risk }};
+        danger = {{ danger }};
+        sensor = '{{ sensor }}';
+        dates = {{ dates|safe }};
+        label = '{{ label }}';
+        data = {{ data|safe }};
     </script>
+    <script src="{% static "js/chart.js" %}"></script>
 {% endblock %}

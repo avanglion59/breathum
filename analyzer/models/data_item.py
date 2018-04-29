@@ -22,7 +22,7 @@ class DataItem(models.Model):
     def bootstrap_data(sensor_id, latitude=47.09514, longitude=37.54131, count=100):
         timestamp = datetime.now()
         for i in range(count):
-            data = round(random.gauss(750, 5))
+            data = round(random.gauss(1000, 25))
             timestamp += timedelta(minutes=1)
             obj = DataItem(data=data, timestamp=timestamp, latitude=latitude, longitude=longitude,
                            sensor_id=sensor_id)
