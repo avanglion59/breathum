@@ -9,6 +9,10 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
+try:
+    from .secrets import *
+except ImportError:
+    pass
 
 import os
 
@@ -18,14 +22,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$123_nj8vtcodhz#++j4^htn+66pe5$!hovf0p9prbzc$qo(4s'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-# ALLOWED_HOSTS = ['127.0.0.1', '.breathum.herokuapp.com', '.breathum.ml', '46.160.68.56']
-ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -70,20 +68,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'breathum.wsgi.application'
-
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'breathum',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
