@@ -26,13 +26,7 @@
                         <label>Select To</label>
                     </div>
                     <br>
-                    <button class="btn waves-effect waves-light" type="submit" name="action" id="click">Get It
-                        <i class="material-icons right">send</i>
-                    </button>
-                    <br>
-                    <br>
-                    <br>
-                    <span class="card-title">Select devices</span>
+                    <span class="card-title">Select devices from list below</span>
                     <div class="input-field">
                         <select id="category-select">
                             <option value="" disabled selected>Choose your option</option>
@@ -44,12 +38,9 @@
                     <div class="input-field">
                         <select multiple id="sensor-select">
                             <option value="" disabled selected>Choose your option</option>
-                            <option value="1">Option 1</option>
-                            <option value="2">Option 2</option>
-                            <option value="3">Option 3</option>
                         </select>
                     </div>
-                    <button class="btn waves-effect waves-light" type="submit" name="action" id="click">Get It
+                    <button class="btn waves-effect waves-light" type="submit" name="action" id="update-sensors">Get It
                         <i class="material-icons right">send</i>
                     </button>
                 </div>
@@ -63,14 +54,14 @@
 
 {% block scripts %}
     <script src="https://momentjs.com/downloads/moment.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
     <script>
-        risk = {{ risk }};
-        danger = {{ danger }};
-        sensor = '{{ sensor }}';
-        dates = {{ dates|safe }};
-        label = '{{ label }}';
-        data = {{ data|safe }};
+        var risk = {{ risk }};
+        var danger = {{ danger }};
+        var sensor = '{{ sensor }}';
+        var dates = {{ dates|safe }};
+        var label = '{{ label }}';
+        var data = {{ data|safe }};
     </script>
     <script src="{% static "js/chart.js" %}"></script>
 {% endblock %}

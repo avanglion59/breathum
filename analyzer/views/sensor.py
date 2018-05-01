@@ -49,6 +49,7 @@ def api(request):
         start_date = [int(i) for i in request.GET.get('from').split('/')]
         end_date = [int(i) for i in request.GET.get('to').split('/')]
 
+        # FIXME: that's very bad
         start_date = date(start_date[2], start_date[1], start_date[0])
         end_date = date(end_date[2], end_date[1], 1 + end_date[0])
 

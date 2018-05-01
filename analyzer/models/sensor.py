@@ -10,8 +10,11 @@ class Sensor(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     title = models.CharField(max_length=150)
     unit = models.CharField(max_length=30)
+
+    # TODO: move this to SensorType model
     risk_bound = models.FloatField()
     danger_bound = models.FloatField()
+
     user = models.ManyToManyField(User)
     trust_level = models.DecimalField(max_digits=1, decimal_places=0)
     type = models.ForeignKey(SensorType, on_delete=models.CASCADE)
