@@ -19,7 +19,7 @@ body, html {
     margin: 0;
 }
 
-.chart-container {
+#chart {
     grid-area: chart;
 }
 
@@ -35,4 +35,12 @@ body, html {
 
 label:before {
     top: -10px !important;
+}
+
+.c3-region.regionRisk {
+    fill: yellow;
+}
+
+.c3-region.regionDanger {
+    fill: red;
 }
