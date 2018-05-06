@@ -29,18 +29,23 @@ function prepareChartData(promises, riskBound, dangerBound) {
         {axis: 'y', start: dangerBound, class: 'regionDanger'}
     ]);
 
+    chart.ygrids.add([
+        {value: dangerBound, text: 'Danger Bound', position: 'middle'},
+        {value: riskBound, text: 'Risk Bound', position: 'middle'}
+    ]);
+
     Promise.all(promises).then(function (value) {
         for (var i = 0; i < value.length; i++) {
             var result = value[i];
-            datasets.columns.push(['sensor' + i]);
+            datasets.columns.push([result.id]);
             for (var j = 0; j < data.length; j++) {
                 datasets.columns[datasets.columns.length - 1].push(result.data[j]);
             }
-            datasets.columns.push(['sensor' + i + '_x']);
+            datasets.columns.push([result.id + '_x']);
             for (j = 0; j < data.length; j++) {
                 datasets.columns[datasets.columns.length - 1].push(new Date(result.labels[j]).toISOString());
             }
-            datasets.xs['sensor' + i] = 'sensor' + i + '_x';
+            datasets.xs[result.id] = result.id + '_x';
         }
 
         console.log(datasets);
@@ -108,13 +113,20 @@ var chart = c3.generate({
     bindto: '#chart',
     data: {
         xFormat: '%Y-%m-%dT%H:%M:%S.%LZ',
-        columns: []
+        columns: [],
+        type: 'spline'
     },
     axis: {
         x: {
             type: 'timeseries',
-            tick: {
+            tick: { 
                 format: '%Y-%m-%d %H:%M:%S'
+            }
+        },
+        y: {
+            min: 0,
+            padding: {
+                bottom: 0
             }
         }
     }
@@ -142,4 +154,16 @@ $("#update-sensors").click(function () {
     }, function (reason) {
         console.log(reason);
     });
+});
+
+$("#bar-transform").click(function () {
+    chart.transform('bar');
+});
+
+$("#line-transform").click(function () {
+    chart.transform('line');
+});
+
+$("#spline-transform").click(function () {
+    chart.transform('spline');
 });

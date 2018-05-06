@@ -65,7 +65,7 @@ class APITimeDeltaView(APIView):
         dates = list(map(lambda x: x['timestamp'].isoformat(), values.values('timestamp')))
         data = list(map(lambda x: x['data'], values.values('data')))
 
-        return {'labels': dates, 'data': data}
+        return {'labels': dates, 'data': data, 'id': request.GET.get('id')}
 
     def get(self, request):
         current_sensor = Sensor.objects.get(id=request.GET.get('id'))
