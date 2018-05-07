@@ -1,8 +1,6 @@
 from django.contrib import admin
 
-from .models.sensor import Sensor
-from .models.data_item import DataItem
-from .models.sensor_type import SensorType
+from analyzer.models import DataItem, Sensor, SensorType
 
 
 class SensorTypeAdmin(admin.ModelAdmin):

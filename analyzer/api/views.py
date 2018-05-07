@@ -1,10 +1,10 @@
-from django.views import View
 from abc import ABC, abstractmethod
-from analyzer.models.sensor import Sensor
-from analyzer.models.data_item import DataItem
-from analyzer.models.sensor_type import SensorType
-from django.http import JsonResponse
 from datetime import date, timedelta
+
+from django.http import JsonResponse
+from django.views import View
+
+from analyzer.models import DataItem, Sensor
 
 
 class APIView(ABC, View):

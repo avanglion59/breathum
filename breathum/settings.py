@@ -35,7 +35,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    
     'analyzer',
+    'analyzer.api',
+    'analyzer.charts',
+    'analyzer.core',
+    'analyzer.maps'
 ]
 
 MIDDLEWARE = [

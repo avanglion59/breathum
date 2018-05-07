@@ -1,14 +1,12 @@
 import json
+from abc import ABC, abstractmethod
 
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
 from django.shortcuts import render
-from django.views import View
 from django.utils.decorators import method_decorator
+from django.views import View
 
-from analyzer.models.sensor import Sensor
-from analyzer.models.data_item import DataItem
-from abc import ABC, abstractmethod
+from analyzer.models import DataItem, Sensor
 
 
 @method_decorator(login_required, name='dispatch')
@@ -44,7 +42,7 @@ class MapView(ABC, View):
 
 
 class PointMapView(MapView):
-    template = 'pointmap.html'
+    template = 'analyzer/maps/pointmap.html'
 
     def get(self, request):
         marker_data = self.get_marker_data(request)
@@ -56,7 +54,7 @@ class PointMapView(MapView):
 
 
 class HeatMapView(MapView):
-    template = 'heatmap.html'
+    template = 'analyzer/maps/heatmap.html'
 
     def get(self, request):
         marker_data = self.get_marker_data(request)
@@ -65,9 +63,3 @@ class HeatMapView(MapView):
                       {'data': data,
                        'username': request.user.first_name + ' ' + request.user.last_name,
                        'email': request.user.email})
-
-
-class APIMapView(MapView):
-    def get(self, request):
-        marker_data = self.get_marker_data(request)
-        return JsonResponse(marker_data, safe=False)

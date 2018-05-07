@@ -8,7 +8,8 @@ from django.shortcuts import render, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from analyzer.forms import LoginForm
-from analyzer.models.data_item import DataItem
+from analyzer.models import DataItem
+
 
 # TODO: split this into several files
 
@@ -57,7 +58,7 @@ def main(request):
                 return HttpResponseRedirect('map/point')
             else:
                 return HttpResponseRedirect('/')
-    return render(request, 'main.html')
+    return render(request, 'index.html')
 
 
 def logout(request):
