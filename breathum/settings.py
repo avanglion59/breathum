@@ -35,7 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
-    
+    'django.contrib.sites',
+
     'analyzer',
     'analyzer.api',
     'analyzer.charts',
@@ -114,3 +115,5 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'assets')]
 
 LOGIN_URL = '/'
+
+SITE_ID = 1
