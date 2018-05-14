@@ -38,11 +38,11 @@ function prepareChartData(promises, riskBound, dangerBound) {
         for (var i = 0; i < value.length; i++) {
             var result = value[i];
             datasets.columns.push([result.id]);
-            for (var j = 0; j < data.length; j++) {
+            for (var j = 0; j < result.data.length; j++) {
                 datasets.columns[datasets.columns.length - 1].push(result.data[j]);
             }
             datasets.columns.push([result.id + '_x']);
-            for (j = 0; j < data.length; j++) {
+            for (j = 0; j < result.data.length; j++) {
                 datasets.columns[datasets.columns.length - 1].push(new Date(result.labels[j]).toISOString());
             }
             datasets.xs[result.id] = result.id + '_x';
@@ -119,7 +119,7 @@ var chart = c3.generate({
     axis: {
         x: {
             type: 'timeseries',
-            tick: { 
+            tick: {
                 format: '%Y-%m-%d %H:%M:%S'
             }
         },

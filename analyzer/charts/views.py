@@ -1,22 +1,18 @@
 import json
 
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views import View
 
-from analyzer.core.views import main
+from analyzer.decorators import user_is_sensor_owner
 from analyzer.models import DataItem, Sensor, SensorType
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator([login_required, user_is_sensor_owner], name='dispatch')
 class ChartView(View):
     def get(self, request):
         current_sensor = Sensor.objects.get(id=request.GET.get('id'))
-        attached_devices = Sensor.objects.filter(user__username=request.user)
-        if current_sensor not in attached_devices:
-            return redirect(main)
-
         values = DataItem.objects.filter(sensor=current_sensor).order_by('timestamp')
 
         dates = json.dumps(list(map(lambda x: x['timestamp'].isoformat(), values.values('timestamp'))))

@@ -28,6 +28,8 @@ class Sensor(models.Model):
     trust_level = models.DecimalField(max_digits=1, decimal_places=0)
     type = models.ForeignKey(SensorType, on_delete=models.CASCADE)
 
+    shareable = models.BooleanField(default=False)
+
     def __str__(self):
         return self.title + ' (' + str(self.id) + ')'
 
@@ -46,7 +48,8 @@ class DataItem(models.Model):
         for i in range(count):
             data = round(random.gauss(1000, 25))
             timestamp += timedelta(minutes=1)
-            obj = DataItem(data=data, timestamp=timestamp, latitude=latitude, longitude=longitude,
+            obj = DataItem(data=data, timestamp=timestamp, latitude=latitude + random.random() / 100,
+                           longitude=longitude + random.random() / 100,
                            sensor_id=sensor_id)
             obj.save()
 

@@ -1,9 +1,12 @@
 from abc import ABC, abstractmethod
 from datetime import date, timedelta
 
+from django.db.models import Q
 from django.http import JsonResponse
+from django.utils.decorators import method_decorator
 from django.views import View
 
+from analyzer.decorators import user_is_sensor_owner
 from analyzer.models import DataItem, Sensor
 
 
@@ -21,23 +24,34 @@ class APIMapView(APIView):
     def get_data(self, request):
         url_base = ('https://' if request.is_secure() else 'http://') + request.get_host() + '/sensor?id='
 
-        sensors = Sensor.objects.filter(user__username=request.user)
+        sensors = Sensor.objects.filter(Q(user__username=request.user) | Q(shareable=True))
 
         data = list()
 
         for sensor in sensors:
             last_data_item = DataItem.objects.filter(sensor=sensor).latest('timestamp')
-            point_item = dict(
+            condition = {}
+            if last_data_item.data >= sensor.danger_bound:
+                condition['color'] = 'red'
+                condition['text'] = 'dangerous'
+            elif last_data_item.data >= sensor.risk_bound:
+                condition['color'] = 'orange'
+                condition['text'] = 'risky'
+            else:
+                condition['color'] = 'green'
+                condition['text'] = 'normal'
+            sensor_item = dict(
                 lat=float(last_data_item.latitude),
                 lng=float(last_data_item.longitude),
                 val=last_data_item.data,
                 desc=f'<b>{sensor.title}</b><br>'
-                     f'{str(sensor.type.title)}<br>'
-                     f'{sensor.unit}<br>'
-                     f'{str(last_data_item.data)}<br>'
+                     f'Type: {str(sensor.type.title)}<br>'
+                     f'Last Data: {str(last_data_item.data)} {sensor.unit}<br>'
+                     f'Air condition: <span style="color:{condition["color"]};">{condition["text"]}</span><br>'
+                     f'<a target="_blank" href="https://goo.gl/Rm3Jiv">How to protect</a><br>'
                      f'<a target="_blank" href="{url_base}{str(sensor.id)}">See Full Data</a>'
             )
-            data.append(point_item)
+            data.append(sensor_item)
 
         return data
 
@@ -46,6 +60,7 @@ class APIMapView(APIView):
         return JsonResponse(data, safe=False)
 
 
+@method_decorator(user_is_sensor_owner, name='dispatch')
 class APITimeDeltaView(APIView):
     def get_data(self, request):
         current_sensor = Sensor.objects.get(id=request.GET.get('id'))
@@ -68,32 +83,26 @@ class APITimeDeltaView(APIView):
         return {'labels': dates, 'data': data, 'id': request.GET.get('id')}
 
     def get(self, request):
-        current_sensor = Sensor.objects.get(id=request.GET.get('id'))
-        attached_devices = Sensor.objects.filter(user__username=request.user)
-        if current_sensor not in attached_devices:
-            return JsonResponse({'response failed': 'not your sensor, bro'})
-        else:
-            return JsonResponse(self.get_data(request), safe=False)
+        return JsonResponse(self.get_data(request), safe=False)
 
 
 class APISensorsView(APIView):
     def get_data(self, request):
         return [i.id for i in
-                Sensor.objects.filter(user__username=request.user, type__title=request.GET.get('type'))]
+                Sensor.objects.filter(
+                    Q(user__username=request.user, type__title=request.GET.get('type')) |
+                    Q(shareable=True, type__title=request.GET.get('type'))
+                )]
 
     def get(self, request):
         return JsonResponse(self.get_data(request), safe=False)
 
 
+@method_decorator(user_is_sensor_owner, name='dispatch')
 class APIEdgesView(APIView):
     def get_data(self, request):
         sensor = Sensor.objects.filter(id=request.GET.get('id'))[0]
         return {'danger': sensor.danger_bound, 'risk': sensor.risk_bound}
 
     def get(self, request):
-        current_sensor = Sensor.objects.get(id=request.GET.get('id'))
-        attached_devices = Sensor.objects.filter(user__username=request.user)
-        if current_sensor not in attached_devices:
-            return JsonResponse({'response failed': 'not your sensor, bro'})
-        else:
-            return JsonResponse(self.get_data(request))
+        return JsonResponse(self.get_data(request))
