@@ -1,6 +1,4 @@
 /static/*
 /venv/*
 /.idea/*
-migrations
 __pycache__
-/breathum/secrets.py
