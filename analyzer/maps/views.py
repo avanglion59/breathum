@@ -12,6 +12,7 @@ from analyzer.models import DataItem, Sensor
 
 @method_decorator(login_required, name='dispatch')
 class MapView(ABC, View):
+    # TODO: move it to model
     def get_marker_data(self, request):
         host = request.get_host()
 
