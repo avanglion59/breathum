@@ -11,8 +11,6 @@ from analyzer.forms import LoginForm
 from analyzer.models import DataItem
 
 
-# TODO: split this into several files
-
 @csrf_exempt
 def insert(request):
     response = HttpResponse()
