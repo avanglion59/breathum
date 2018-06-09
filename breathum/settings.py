@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'analyzer.charts',
     'analyzer.core',
     'analyzer.maps',
+    'analyzer.bot',
 
     'rest_framework'
 ]
